@@ -5,24 +5,42 @@
 <script type="text/javascript" src="/static/admin/js/jquery.js"></script>
 <script type="text/javascript" src="/static/admin/js/jquery.init.js"></script>
 <script type="text/javascript" src="/static/admin/js/actions.js"></script>
+<!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>-->
 </head>
 <body>
 
 <h1>Municípios</h1>
 
+<p>Seleção: <span id="selecao">(nenhuma)</span></p>
+
 <table>
   <tr><th>Regiões</th></tr>
   <tr><td>
-    <select id="selection" size="{{reg_altura|default:5}}">
+    <select id="regiao" size="{{reg_altura|default:5}}">
       {% for regiao in object_list %}
          <option value="{{regiao.id}}">{{regiao.nome}}</option>
       {% endfor %}
     </select>
-  </td></tr>
+  </td>
+  <td>
+	<select id="uf" size="10">
+	</select>
+  </td>
+</tr>
 </table>
 
 <script type="text/javascript">
+
+var $ = django.jQuery
 $(document).ready(function(){
-   // do jQuery
+   $("#regiao").click(function(event){
+        var reg_sel = $(this+"option:selected")
+        $("#selecao").text(reg_sel.text());
+        $("#uf").empty();
+		for (var i=0; i<3; i++) {
+            $('<option>'+reg_sel.text()+'</option>').appendTo($("#uf"));
+        }
+	})
 });
+
 </script>
